@@ -112,16 +112,20 @@ class Autoreply:
         pat=('htm_data/\w+/\w+/\w+.html')
         con=self.s.get(self.url,headers=self.headers)
         con = con.text.encode('iso-8859-1').decode('gbk')
+        match=re.findall(pat,con)
+        self.match=match
         qiuzhutie=con.find('求片求助貼')
         qiuzhutie=con[qiuzhutie-100:qiuzhutie]
-        qiuzhutielink=re.findall(pat,qiuzhutie)
+        if re.findall(pat,qiuzhutie)!=[]:
+            qiuzhutielink=re.findall(pat,qiuzhutie)
+        else:
+            qiuzhutielink=['no']
+            self.match.append('no')
         self.logger.debug('求助帖链接是:'+qiuzhutielink[0])
         self.black_list.append(qiuzhutielink[0])
-        match=re.findall(pat,con)
         try:
             for data in self.black_list:
-                match.remove(data)
-            self.match=match
+                self.match.remove(data)
         except:
             print('移除失败，知道因为啥。。。')
             pass
@@ -133,6 +137,7 @@ class Autoreply:
         self.geturl=geturl
         tid=self.match[m][16:len(self.match[m])-5]
         self.tid=tid
+        self.match.remove(self.match[m])
         #print('请求链接是: '+geturl)
 
     def browse(self):
@@ -248,27 +253,30 @@ if __name__ == "__main__":
     auto.gettodaylist()
     #回复
     while n<10 and suc is False:
-        auto.debug("当前在第"+str(n+1)+'个。')
-        auto.getonelink()
-        auto.browse()
-        auto.getreply()
-        auto.getmatch()
-        sleeptime=random.randint(1024,2048)
-        au=auto.postreply()
-        if au=='回复成功':
-            auto.debug('回复成功')
-            n=n+1
-            auto.debug('休眠'+str(sleeptime)+'s...')
-            sleep(sleeptime)
-            auto.debug('休眠完成')
-        elif au=='今日已达上限':
-            auto.debug('回复失败，今日次数已达10次')
-            suc=True
-        else:
-            auto.debug('1024限制！！！')
-            auto.debug('休眠'+str(sleeptime)+'s...')
-            sleep(sleeptime)
-            auto.debug('休眠完成')
+        try:
+            auto.debug("当前在第"+str(n+1)+'个。')
+            auto.getonelink()
+            auto.browse()
+            auto.getreply()
+            auto.getmatch()
+            sleeptime=random.randint(1024,2048)
+            au=auto.postreply()
+            if au=='回复成功':
+                auto.debug('回复成功')
+                n=n+1
+                auto.debug('休眠'+str(sleeptime)+'s...')
+                sleep(sleeptime)
+                auto.debug('休眠完成')
+            elif au=='今日已达上限':
+                auto.debug('回复失败，今日次数已达10次')
+                suc=True
+            else:
+                auto.debug('1024限制！！！')
+                auto.debug('休眠'+str(sleeptime)+'s...')
+                sleep(sleeptime)
+                auto.debug('休眠完成')
+        except:
+            print('回复失败，重试')
     n=auto.getnumber()
     auto.debug('开始时发表帖子:'+m)
     auto.debug('结束时发表帖子:'+n)
