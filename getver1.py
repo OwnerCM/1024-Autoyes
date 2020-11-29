@@ -1,4 +1,3 @@
-# encoding:utf-8
 import requests
 import base64
 from PIL import Image
