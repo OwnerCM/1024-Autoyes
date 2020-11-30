@@ -108,6 +108,8 @@ class Autoreply:
         if login.find('驗證碼不正確')!=-1:
             Err='验证码不正确，请重新输入'
             return Err
+        else:
+            self.logger.debug(login)
 
     def gettodaylist(self):
         pat=('htm_data/\w+/\w+/\w+.html')
