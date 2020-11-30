@@ -104,7 +104,8 @@ class Autoreply:
         data={
             'validate': vercode
         }
-        login=self.s.post(self.loginurl,data=data,headers=self.headers1)
+        login=self.s.post(self.loginurl,data=data,headers=self.headers1)        
+        self.cookies=login.cookies
         login=login.text.encode('iso-8859-1').decode('gbk')
         if login.find('驗證碼不正確')!=-1:
             Err='验证码不正确，请重新输入'
