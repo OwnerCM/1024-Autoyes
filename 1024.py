@@ -64,6 +64,7 @@ class Autoreply:
                 'step': '2'
         }
         login=self.s.post(self.loginurl,headers=self.headers,data=data)
+        self.cookies=login.cookies
         login=login.text.encode('iso-8859-1').decode('gbk')
         if login.find('登录尝试次数过多')!=-1:
             Err='登录尝试次数过多,需输入验证码'
