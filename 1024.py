@@ -257,6 +257,10 @@ if __name__ == "__main__":
                     auto.debug('登录成功')
                     success = True
                     au=''
+            else:
+                auto.debug('登录成功')
+                success = True
+                au=''
     m=auto.getnumber()
     auto.gettodaylist()
     #回复
