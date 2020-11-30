@@ -72,6 +72,7 @@ class Autoreply:
         elif login.find('賬號已開啟兩步驗證')!=-1:
             Err='賬號已開啟兩步驗證'
             return Err
+        self.logger.debug(login)
 
     def login2(self):
         sleep(2)
@@ -104,8 +105,7 @@ class Autoreply:
         data={
             'validate': vercode
         }
-        login=self.s.post(self.loginurl,data=data,headers=self.headers1)        
-        self.cookies=login.cookies
+        login=self.s.post(self.loginurl,data=data,headers=self.headers1)
         login=login.text.encode('iso-8859-1').decode('gbk')
         if login.find('驗證碼不正確')!=-1:
             Err='验证码不正确，请重新输入'
