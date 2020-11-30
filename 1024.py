@@ -251,6 +251,7 @@ if __name__ == "__main__":
                     success = True
                     au=''
     m=auto.getnumber()
+    auto.debug('登录成功')
     auto.gettodaylist()
     #回复
     while n<10 and suc is False:
