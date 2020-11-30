@@ -72,7 +72,6 @@ class Autoreply:
         elif login.find('賬號已開啟兩步驗證')!=-1:
             Err='賬號已開啟兩步驗證'
             return Err
-        self.logger.debug(login)
 
     def login2(self):
         sleep(2)
@@ -212,7 +211,6 @@ class Autoreply:
         index=requests.get(self.indexurl,headers=self.headers,cookies=self.cookies)
         index = index.text.encode('iso-8859-1').decode('gbk')
         pat='共發表帖子: \d{1,5}'
-        self.logger.debug(index)
         num=re.search(pat,index).group(0)
         num=num.replace('共發表帖子: ','')
         return num
