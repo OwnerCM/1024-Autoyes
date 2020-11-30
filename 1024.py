@@ -108,8 +108,6 @@ class Autoreply:
         if login.find('驗證碼不正確')!=-1:
             Err='验证码不正确，请重新输入'
             return Err
-        else:
-            self.logger.debug(login)
 
     def gettodaylist(self):
         pat=('htm_data/\w+/\w+/\w+.html')
@@ -163,7 +161,7 @@ class Autoreply:
 
     def getreply(self):
         #自定义回复内容，记得修改随机数
-        reply=['感谢分享','感谢你的分享','谢谢分享','多谢分享']
+        reply=['感谢分享','感谢你的分享','谢谢分享','多谢分享','1024']
         reply_m=random.randint(0,3)
         reply_news=reply[reply_m]
         self.reply_news=reply_news.encode('gb2312')
@@ -246,6 +244,10 @@ if __name__ == "__main__":
                     auto.debug('登录成功')
                     success = True
                     au=''
+            else:
+                auto.debug('登录成功')
+                success = True
+                au=''
         else:
             if au=='賬號已開啟兩步驗證':
                 if auto.login2()=='已經順利登錄':
@@ -253,7 +255,6 @@ if __name__ == "__main__":
                     success = True
                     au=''
     m=auto.getnumber()
-    auto.debug('登录成功')
     auto.gettodaylist()
     #回复
     while n<10 and suc is False:
