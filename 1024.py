@@ -115,9 +115,15 @@ class Autoreply:
     def gettodaylist(self):
         pat=('htm_data/\w+/\w+/\w+.html')
         con=self.s.get(self.url,headers=self.headers)
-        con = con.text.encode('iso-8859-1').decode('gbk')
+        con = con.text.encode('iso-8859-1').decode('gbk','ignore')
         match=re.findall(pat,con)
         self.match=match
+        #判断是否存在分页，不存在则删除
+        for i in range(0,len(match)-1):
+            tid=match[i][16:len(match[i])-5]
+            if con.find('read.php?tid='+tid+'&page=2&fpage=1')<0:
+                self.black_list.append(match[i])
+                
         qiuzhutie=con.find('求片求助貼')
         qiuzhutie=con[qiuzhutie-100:qiuzhutie]
         if re.findall(pat,qiuzhutie)!=[]:
@@ -271,7 +277,7 @@ if __name__ == "__main__":
             auto.browse()
             auto.getreply()
             auto.getmatch()
-            sleeptime=random.randint(1024,1500)
+            sleeptime=random.randint(1024,2000)
             au=auto.postreply()
             if au=='回复成功':
                 auto.debug('回复成功')
