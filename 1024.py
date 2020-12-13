@@ -123,7 +123,7 @@ class Autoreply:
             tid=match[i][16:len(match[i])-5]
             if con.find('read.php?tid='+str(tid)+'&page=2')<0:
                 self.black_list.append(match[i])
-
+        
         qiuzhutie=con.find('求片求助貼')
         qiuzhutie=con[qiuzhutie-100:qiuzhutie]
         if re.findall(pat,qiuzhutie)!=[]:
@@ -216,6 +216,8 @@ class Autoreply:
         elif post.find('灌水預防機制')!=-1:
             status='1024秒內不能回帖'
             return status
+        else:
+            return post
         
         if post.find('所屬的用戶組')!=-1:
             status='今日已达上限'
@@ -292,6 +294,8 @@ if __name__ == "__main__":
                 auto.debug('休眠'+str(sleeptime)+'s...')
                 sleep(sleeptime)
                 auto.debug('休眠完成')
+            elif au=='无法在第一页回帖':
+                auto.debug('无法在第一页回帖!')
             elif au=='今日已达上限':
                 auto.debug('回复失败，今日次数已达10次')
                 suc=True
@@ -301,9 +305,8 @@ if __name__ == "__main__":
                 sleep(sleeptime)
                 auto.debug('休眠完成')
         except:
-            print('回复失败，重试!')
+            print('回复失败，重试')
     n=auto.getnumber()
     auto.debug('开始时发表帖子:'+m)
     auto.debug('结束时发表帖子:'+n)
     auto.debug('回复'+str(int(n)-int(m))+'次')
-    
