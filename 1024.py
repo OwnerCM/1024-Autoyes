@@ -121,7 +121,7 @@ class Autoreply:
         #判断是否存在分页，不存在则删除
         for i in range(0,len(match)-1):
             tid=match[i][16:len(match[i])-5]
-            if con.find('read.php?tid='+str(tid)+'&page=2')<0:
+            if con.find('read.php?tid='+str(tid)+'&page=2')=-1:
                 self.black_list.append(match[i])
         
         qiuzhutie=con.find('求片求助貼')
@@ -211,17 +211,16 @@ class Autoreply:
             status='回复成功'
             return status
         elif post.find('用戶組限制')!=-1:
-            status='无法在第一页回帖'
+            status=post
             return status
         elif post.find('灌水預防機制')!=-1:
             status='1024秒內不能回帖'
             return status
-        else:
-            return post
-        
-        if post.find('所屬的用戶組')!=-1:
+        elif post.find('所屬的用戶組')!=-1:
             status='今日已达上限'
             return status
+        else:
+            return post
 
     def getnumber(self):
         sleep(2)
@@ -295,7 +294,7 @@ if __name__ == "__main__":
                 sleep(sleeptime)
                 auto.debug('休眠完成')
             elif au=='无法在第一页回帖':
-                auto.debug('无法在第一页回帖!')
+                auto.debug('无法在第一页回帖!返回：'+au)
             elif au=='今日已达上限':
                 auto.debug('回复失败，今日次数已达10次')
                 suc=True
