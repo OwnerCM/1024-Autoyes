@@ -121,7 +121,7 @@ class Autoreply:
         #判断是否存在分页，不存在则删除
         for i in range(0,len(match)-1):
             tid=match[i][16:len(match[i])-5]
-            if con.find('read.php?tid='+str(tid)+'&page=2')=-1:
+            if con.find('read.php?tid='+str(tid)+'&page=2')==-1:
                 self.black_list.append(match[i])
         
         qiuzhutie=con.find('求片求助貼')
