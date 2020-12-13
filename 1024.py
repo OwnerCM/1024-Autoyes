@@ -211,7 +211,7 @@ class Autoreply:
             status='回复成功'
             return status
         elif post.find('用戶組限制')!=-1:
-            status=post
+            status='无法在第一页回帖'+post
             return status
         elif post.find('灌水預防機制')!=-1:
             status='1024秒內不能回帖'
@@ -293,8 +293,8 @@ if __name__ == "__main__":
                 auto.debug('休眠'+str(sleeptime)+'s...')
                 sleep(sleeptime)
                 auto.debug('休眠完成')
-            elif au=='无法在第一页回帖':
-                auto.debug('无法在第一页回帖!返回：'+au)
+            elif au.find('无法在第一页回帖')!=-1:
+                auto.debug('无法在第一页回帖!原因：'+au)
             elif au=='今日已达上限':
                 auto.debug('回复失败，今日次数已达10次')
                 suc=True
