@@ -115,7 +115,8 @@ class Autoreply:
     def gettodaylist(self):
         pat=('htm_data/\w+/\w+/\w+.html')
         con=self.s.get(self.url,headers=self.headers)
-        con = con.text.encode('iso-8859-1').decode('gbk','ignore')
+        #con = con.text.encode('iso-8859-1').decode('gbk','ignore')
+        con = con.text.encode('iso-8859-1').decode('gbk')
         match=re.findall(pat,con)
         self.match=match
         #判断是否存在分页，不存在则删除
